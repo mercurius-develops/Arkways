@@ -196,7 +196,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                            <div class="card shadow">
+                            <div class="card shadow  border-tiffany-2">
                                 <div class="card-body">
                                     <div class="row alig n-items-start">
                                         <div class="col-11">
@@ -222,7 +222,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-5  d-flex align-items-stretch">
-                        <div class="card shadow w-100">
+                        <div class="card shadow w-100  border-tiffany-2">
                             <div class="card-body p-4">
                                 <div class="mb-4 d-flex justify-content-start align-items-center">
                                     <h5 class="card-title ms-2 fw-semibold col-9">Recent Transactions</h5>
@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="card shadow w-100">
+                        <div class="card shadow w-100  border-tiffany-2">
                             <div class="card-body p-4 d-flex flex-wrap">
                                 <div class="w-100 text-center">
                                     <button id="addTrans" type="button"
@@ -284,7 +284,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card shadow w-100">
+                        <div class="card shadow w-100 border-tiffany-2">
                             <div class="card-body p-4 d-flex flex-wrap">
                                 <div class="w-100 text-center">
                                     <div class="grid grid-cols-3 divide-x text-center">
@@ -315,14 +315,14 @@
 
 
                 
-                <div class="card shadow">
+                <div class="card shadow border-tiffany-2">
                     <div class="card-body d-flex flex-column">
                         <h1 class="card-title ms-2 fw-semibold mb-3">
                             Registered Customers
                         </h1>
                         <input type="text" class="form-control mb-4 live-search-box" placeholder="Search">
                         <div class="card shadow">
-                            <div class="live-search-list-wrapper" style="max-height: 350px; overflow-y: auto;">
+                            <div class="live-search-list-wrapper message-body overflow-y-auto">
                                 <ul class="live-search-list">
                                     @foreach ($customers as $customer)
                                     <li>
