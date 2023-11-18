@@ -92,7 +92,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item mb-2">
-                            <a class="sidebar-link cursor-pointer" href="{{ route ('transaction.signup') }}">
+                            <a class="sidebar-link cursor-pointer active" href="{{ route ('transaction.signup') }}">
                                 <span>
                                     <i class="ti ti-coin-euro"></i>
                                 </span>

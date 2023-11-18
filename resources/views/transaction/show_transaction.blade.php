@@ -100,7 +100,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route ('transaction.show') }}" aria-expanded="false">
+                            <a class="sidebar-link active" href="{{ route ('transaction.show') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-report-money"></i>
                                 </span>
@@ -186,7 +186,7 @@
 
             <div class="container-fluid container-sm">
                 <div class="row">
-                    <div class="card shadow-lg">
+                    <div class="card shadow-lg border-tiffany-2">
                         <h1 class="card-title m-4 mb-2 fw-bolder fs-7">Recent Transactions</h1>
                         <div class="card-body">
                             <input type="search" id="search" class="live-search-box form-control mb-4"

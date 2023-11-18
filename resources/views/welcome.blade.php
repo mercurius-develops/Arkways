@@ -19,7 +19,7 @@
             <div class="d-flex align-items-center justify-content-center w-100">
                 <div class="row justify-content-center w-100">
                     <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0 shadow-lg">
+                        <div class="card mb-0 shadow-lg border-tiffany-2">
                             <div class="card-body">
                                 <a href="#"
                                     class="text-nowrap logo-img text-center d-block py-3 w-100 text-tiffany fs-8 fw-bolder">
@@ -45,7 +45,7 @@
                                 @endauth
                                 @endif
 
-                                <p class="text-center mt-4 mb-0">Developed By: <span class="text-tiffany fw-semibold">Mercurius Inc</span></p>
+                                <p class="text-center mt-4 mb-0">Developed By: <a href="https://mercurius-inc.com" class="text-tiffany fw-semibold">Mercurius Inc</span></p>
                             </div>
                         </div>
                     </div>

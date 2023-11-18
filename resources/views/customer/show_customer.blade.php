@@ -67,7 +67,7 @@
                             <span class="hide-menu">Customers</span>
                         </li>
                         <li class="sidebar-item mb-2">
-                            <a class="sidebar-link" href="{{ route ('customer.show') }}" aria-expanded="false">
+                            <a class="sidebar-link active" href="{{ route ('customer.show') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-article"></i>
                                 </span>
@@ -183,16 +183,16 @@
             <!--  Header End -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="card shadow">
+                    <div class="card shadow border-tiffany-2">
                         <div class="card-body">
-                            <input type="search" class="live-search-box form-control mb-4"
+                            <input type="search" class="live-search-box form-control my-2"
                                 placeholder="Search Customer">
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="card shadow">
+                    <div class="card shadow border-tiffany-2">
                         <div class="card-body">
                             <h2 class="fw-bolder">Registered Customers</h2>
                         </div>
@@ -202,7 +202,7 @@
                                 <li class="w-33">
                                     <div class="w-auto mt-2 m-3 me-1 mr-2 ">
                                         <a href="{{URL::to('customer', $customer->id)}}" class="text-decoration-none link-dark">
-                                            <div class="card-body rounded shadow pe-7 card-hover">
+                                            <div class="card-body rounded shadow-sm border-tiffany pe-7 card-hover">
                                                 <div class="d-flex align-items-center gap-2 overflow-hidden text-nowrap">
                                                     <h4 class=" text-uppercase fw-bold text-tiffany">{{$customer->name}}
                                                     </h4>

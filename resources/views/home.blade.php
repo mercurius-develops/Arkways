@@ -196,7 +196,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                            <div class="card shadow  border-tiffany-2">
+                            <div class="card shadow border-tiffany-2">
                                 <div class="card-body">
                                     <div class="row alig n-items-start">
                                         <div class="col-11">

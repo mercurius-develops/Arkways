@@ -186,7 +186,7 @@
 
             <div class="container-sm">
                 <div class="row">
-                    <div class="card shadow-lg rounded-3">
+                    <div class="card shadow-lg  border-tiffany-2 rounded-3">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h1 class="fw-bolder text-uppercase text-tiffany fs-12 m-7 ms-0">{{ $customer->name }}

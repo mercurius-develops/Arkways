@@ -99,7 +99,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="{{ route ('transaction.show') }}" aria-expanded="false">
+                            <a class="sidebar-link active" href="{{ route ('transaction.show') }}" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-report-money"></i>
                                 </span>
@@ -185,7 +185,7 @@
 
             <div class="container-fluid container-sm">
                 <div class="row">
-                    <div class="card shadow-lg d-flex flex-column align-items-center">
+                    <div class="card shadow-lg border-tiffany-2 d-flex flex-column align-items-center">
                         <h1 class="card-title m-4 mb-2 fw-bolder fs-7 align-self-baseline">Add New Transaction</h1>
                         <div class="card-body w-85">
                             <form action="{{ route ('transaction.update', $DEF->id) }}" method="post">
