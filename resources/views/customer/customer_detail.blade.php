@@ -376,7 +376,7 @@
 
             <footer>
                 <div class="py-6 px-6 text-center footer">
-                    <p class="mb-0 fs-4">Developed by <a href="#" target="_blank"
+                    <p class="mb-0 fs-4">Developed by <a href="https://mercurius-inc.com" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">Mercurius Inc.</a></p>
                 </div>
             </footer>
