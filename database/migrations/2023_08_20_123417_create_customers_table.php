@@ -16,13 +16,13 @@ return new class extends Migration
              $table->id();
              $table->unsignedBigInteger('referred_id')->nullable();
              $table->string('name');
-             $table->string('doc_no');
+             $table->string('doc_no')->nullable();
              $table->string('mobile_no')->nullable();
              $table->string('dob')->nullable();
              $table->string('primary_email')->nullable();
              $table->binary('document_images')->nullable();
-             $table->integer('free_sale')->nullable();
-             $table->integer('free_ref_sale')->nullable();
+             $table->integer('transaction_count')->default(0);
+             $table->integer('referral_count')->default(0);
 
               // New column for transaction count
      

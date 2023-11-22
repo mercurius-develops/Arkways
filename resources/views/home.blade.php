@@ -196,7 +196,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                            <div class="card shadow border-tiffany-2">
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <div class="row alig n-items-start">
                                         <div class="col-11">
@@ -222,7 +222,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-5  d-flex align-items-stretch">
-                        <div class="card shadow w-100  border-tiffany-2">
+                        <div class="card shadow w-100">
                             <div class="card-body p-4">
                                 <div class="mb-4 d-flex justify-content-start align-items-center">
                                     <h5 class="card-title ms-2 fw-semibold col-9">Recent Transactions</h5>
@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <div class="col-lg-7">
-                        <div class="card shadow w-100  border-tiffany-2">
+                        <div class="card shadow w-100">
                             <div class="card-body p-4 d-flex flex-wrap">
                                 <div class="w-100 text-center">
                                     <button id="addTrans" type="button"
@@ -284,7 +284,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card shadow w-100 border-tiffany-2">
+                        <div class="card shadow w-100">
                             <div class="card-body p-4 d-flex flex-wrap">
                                 <div class="w-100 text-center">
                                     <div class="grid grid-cols-3 divide-x text-center">
@@ -314,15 +314,77 @@
                 </div>
 
 
-                
-                <div class="card shadow border-tiffany-2">
+                <div class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center backdrop-blur bg-opacity-50 transform scale-0 transition-transform duration-300"
+                    id="addTransModal">
+                    <div class="card shadow w-50">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h1 class="fw-bolder card-title ">Add Transaction</h1>
+                                <button id="addClose"
+                                    class="btn btn-primary bg-tiffany border-0 self-end mb-2">Close</button>
+                            </div>
+                            <form action="{{ route('transaction.store') }}" method="post">
+                                @csrf
+                                <select class="selectpicker my-3" data-size="7" data-live-search="true"
+                                    data-title="Search Customer" id="state_list" data-width="100%" required
+                                    name="customer" id="customer-dropdown">
+                                    @foreach ($customers as $index => $customer)
+                                    <option value="{{ $customer->id }}"
+                                        data-transaction-count="{{ $customer->transactions->count()}}"
+                                        data-free-sale="{{ $customer->transaction_count }}"
+                                        data-referral-count="{{ $customer->referral_count }}"
+                                        data-free-referral-count="{{ $customer->transactions->where('trans_type', '==', 'FreeReferral')->count() }}"
+                                        data-free-count="{{ $customer->transactions->where('trans_type', '==', 'Free')->count() }}"
+                                        class="text-center {{ $index % 2 === 0 ? '' : 'bg-tiffany-2' }}">
+                                        @if ($customer->name)
+                                        <span class="fw-bold">
+                                            {{$customer->name}}
+                                        </span>
+                                        @else
+                                        N/A
+                                        @endif
+                                        &nbsp;|&nbsp;
+                                        @if ($customer->doc_no)
+                                        {{ $customer->doc_no }}
+                                        @else
+                                        N/A
+                                        @endif
+                                        &nbsp;|&nbsp;
+                                        @if ($customer->mobile_no)
+                                        {{ $customer->mobile_no }}
+                                        @else
+                                        N/A
+                                        @endif
+                                    </option>
+                                    @endforeach
+                                </select>
+
+                                <h1 id="message"
+                                    class="display-none mb-4 fs-5 text-tiffany fw-bold bg-tiffany-2 rounded p-2 text-center">
+                                    Customer is eligible for a free sale</h1>
+                                <input class="display-none" id="trans_type" name="trans_type" placeholder="trans_type">
+                                <input class="display-none" id="ref_count" name="ref_count" placeholder="ref_count">
+                                <input class="display-none" id="free_count" name="free_count" placeholder="free_count">
+                                <input class="form-control mb-4" id="ref_no" name="ref_no" placeholder="Transaction ID">
+                                <a href="" class="w-100">
+                                    <button class=" p-2.5 btn btn-primary bg-tiffany border-0 w-100">Submit
+                                    </button>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="card shadow">
                     <div class="card-body d-flex flex-column">
                         <h1 class="card-title ms-2 fw-semibold mb-3">
                             Registered Customers
                         </h1>
                         <input type="text" class="form-control mb-4 live-search-box" placeholder="Search">
                         <div class="card shadow">
-                            <div class="live-search-list-wrapper message-body overflow-y-auto">
+                            <div class="live-search-list-wrapper" style="max-height: 350px; overflow-y: auto;">
                                 <ul class="live-search-list">
                                     @foreach ($customers as $customer)
                                     <li>
@@ -372,69 +434,10 @@
                     </div>
                 </div>
 
-                <div class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center backdrop-blur bg-opacity-50 transform scale-0 transition-transform duration-300"
-                    id="addTransModal">
-                    <div class="card shadow w-50">
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h1 class="fw-bolder card-title ">Add Transaction</h1>
-                                <button id="addClose"
-                                    class="btn btn-primary bg-tiffany border-0 self-end mb-2">Close</button>
-                            </div>
-                            <form action="{{ route('transaction.store') }}" method="post">
-                                @csrf
-                                <select class="selectpicker my-3" data-size="7" data-live-search="true"
-                                    data-title="Search Customer" id="state_list" data-width="100%" required
-                                    name="customer" id="customer-dropdown">
-                                    @foreach ($customers as $index => $customer)
-                                    <option value="{{ $customer->id }}"
-                                        data-transaction-count="{{ $customer->transactions->where('trans_type', '==', 'Paid')->count()}}"
-                                        data-free-sale="{{ $customer->transaction_count }}"
-                                        data-referral-count="{{ $customer->referral_count }}"
-                                        data-free-referral-count="{{ $customer->transactions->where('trans_type', '==', 'FreeReferral')->count() }}"
-                                        data-free-count="{{ $customer->transactions->where('trans_type', '==', 'Free')->count() }}"
-                                        class="text-center {{ $index % 2 === 0 ? '' : 'bg-tiffany-2' }}">
-                                        @if ($customer->name)
-                                        <span class="fw-bold">
-                                            {{$customer->name}}
-                                        </span>
-                                        @else
-                                        N/A
-                                        @endif
-                                        &nbsp;|&nbsp;
-                                        @if ($customer->doc_no)
-                                        {{ $customer->doc_no }}
-                                        @else
-                                        N/A
-                                        @endif
-                                        &nbsp;|&nbsp;
-                                        @if ($customer->mobile_no)
-                                        {{ $customer->mobile_no }}
-                                        @else
-                                        N/A
-                                        @endif
-                                    </option>
-                                    @endforeach
-                                </select>
 
-                                <h1 id="message"
-                                    class="display-none mb-4 fs-5 text-tiffany fw-bold bg-tiffany-2 rounded p-2 text-center">
-                                    Customer is eligible for a free sale</h1>
-                                <input class="display-none" id="trans_type" name="trans_type" placeholder="trans_type">
-                                <input class="display-none" id="ref_count" name="ref_count" placeholder="ref_count">
-                                <input class="display-none" id="free_count" name="free_count" placeholder="free_count">
-                                <input class="form-control mb-4" id="ref_no" name="ref_no" placeholder="Transaction ID">
-                                <a href="" class="w-100">
-                                    <button class=" p-2.5 btn btn-primary bg-tiffany border-0 w-100">Submit
-                                    </button>
-                                </a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="py-6 px-6 text-center footer">
-                    <p class="mb-0 fs-4">Developed by <a href="https://mercurius-inc.com" target="_blank"
+                    <p class="mb-0 fs-4">Developed by <a href="#" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">Mercurius Inc.</a></p>
                 </div>
             </div>
@@ -451,7 +454,12 @@
         delete sales[keys[keys.length - 1]];
     }
 
- 
+    // @foreach($customers as $customer)
+    // console.log({{$customer->transactions->where('trans_type', '==', "Free")-> count()}})
+    // let margin = {{$customer->transactions->where('trans_type', '==', "Free") -> count()}};
+    // @endforeach
+
+
     $(document).ready(function () {
         $('#state_list').on('change', function () {
             var selectedCustomer = $(this).val(); // Get the selected customer's value
@@ -470,44 +478,35 @@
                 var referralCount = parseInt($('#state_list option:selected').data('referral-count'));
                 var freeSale = parseInt($('#state_list option:selected').data('free-sale'));
                 var freeReffCount = parseInt($('#state_list option:selected').data('free-referral-count'));
-                @php
-                    $latestTransaction = $customer->transactions()->latest()->first();
 
-                    if ($latestTransaction) {
-                        $lastSale = $latestTransaction->trans_type;
-                    } else {
-                        $lastSale = null;
-                    }
-                @endphp
-
-               let lastSale = "{{$lastSale}}";
-
-                console.log(lastSale);
+                console.log(freeCount);
+                // console.log(transactionCount);
                 // console.log(transactionCount % 6);
                 // console.log(transactionCount % 5);
 
-                if (referralCount != 0 && transactionCount != 0 || ((transactionCount) % 5 == 0)) {
+                if (transactionCount != 0 && (transactionCount - freeCount - freeReffCount) % 5 == 0) {
                     $('#message').show();
                 } else {
                     $('#message').hide(); // Hide the message if no customer is selected
                 }
 
-                if (referralCount != 0 )  {
+                if (referralCount != 0 && transactionCount != 0 && (transactionCount + 1) % 6 == 0) {
                     transType.value = "FreeReferral";
                     refCount.value = 0;
                     transCount = 1;
                     console.log("FreeReff Test:1")
-                } else if (referralCount == 0 && transactionCount != 0 && ((transactionCount) % 5) == 0 && lastSale == "Paid" ) {
+                } else if (referralCount != 0) {
+                    transType.value = "FreeReferral";
+                    refCount.value = 0;
+                    console.log("FreeReff Test:2")
+                } else if (referralCount == 0 && transactionCount != 0 && (transactionCount - freeCount - freeReffCount) % 5 == 0) {
                     transType.value = "Free";
                     console.log("Free Test:1")
                     refCount.value = referralCount;
                     transCount.value = 0;
-                    console.log(transactionCount);
-                    console.log(freeCount);
-                    console.log(freeReffCount);
                 } else {
                     transType.value = "Paid";
-                    console.log("Paid Test:2")
+                    console.log("Paid Test:1")
                     console.log(referralCount);
                     refCount.value = referralCount;
                     transCount.value = freeSale;

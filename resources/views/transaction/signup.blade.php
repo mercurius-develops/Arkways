@@ -92,7 +92,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item mb-2">
-                            <a class="sidebar-link cursor-pointer active" href="{{ route ('transaction.signup') }}">
+                            <a class="sidebar-link cursor-pointer" href="{{ route ('transaction.signup') }}">
                                 <span>
                                     <i class="ti ti-coin-euro"></i>
                                 </span>
@@ -240,8 +240,10 @@
                                 <h1 id="message"
                                     class="display-none mb-4 fs-5 text-tiffany fw-bold bg-tiffany-2 rounded p-2 text-center">
                                     Customer is eligible for a free sale</h1>
-                                <input class="display-none" id="trans_type" name="trans_type"
-                                    placeholder="Transaction ID">
+                                    <input class="display-none" id="trans_type" name="trans_type" placeholder="trans_type">
+                                <input class="display-none" id="ref_count" name="ref_count" placeholder="ref_count">
+                                <input class="display-none" id="free_count" name="free_count" placeholder="free_count">
+                                
 
                                 <div class="w-100">
                                     <label for="ref_no" class="form-label">Transaction ID &nbsp; <span
@@ -261,7 +263,7 @@
 
             <footer>
                 <div class="py-6 px-6 text-center">
-                    <p class="mb-0 fs-4">Developed by <a href="https://mercurius-inc.com" target="_blank"
+                    <p class="mb-0 fs-4">Developed by <a href="#" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">Mercurius Inc.</a></p>
                 </div>
             </footer>
@@ -275,45 +277,85 @@
 
 <script>
 
-$(document).ready(function() {
-    $('#state_list').on('change', function() {
-        var selectedCustomer = $(this).val(); // Get the selected customer's value
-        var transType = document.getElementById("trans_type");
-        // Check if the selected customer has transaction_count equal to 1
-        if (selectedCustomer && selectedCustomer !== "Search Customer") {
-            var transactionCount = parseInt($('#state_list option:selected').data('transaction-count'));
-            console.log(transactionCount);
-            console.log(transactionCount % 6);
+$(document).ready(function () {
+        $('#state_list').on('change', function () {
+            var selectedCustomer = $(this).val(); // Get the selected customer's value
+            console.log(selectedCustomer);
+            var transType = document.getElementById("trans_type");
+            let message = document.getElementById("message");
+            let refCount = document.getElementById("ref_count");
+            let transCount = document.getElementById("free_count");
 
-            if (transactionCount % 6 == 0) {
-                transType.value = "Free";
+
+
+            // Check if the selected customer has transaction_count equal to 1
+            if (selectedCustomer && selectedCustomer !== "Search Customer") {
+                var transactionCount = parseInt($('#state_list option:selected').data('transaction-count'));
+                var freeCount = parseInt($('#state_list option:selected').data('free-count'));
+                var referralCount = parseInt($('#state_list option:selected').data('referral-count'));
+                var freeSale = parseInt($('#state_list option:selected').data('free-sale'));
+                var freeReffCount = parseInt($('#state_list option:selected').data('free-referral-count'));
+                @php
+                    $latestTransaction = $customer->transactions()->latest()->first();
+
+                    if ($latestTransaction) {
+                        $lastSale = $latestTransaction->trans_type;
+                    } else {
+                        $lastSale = null;
+                    }
+                @endphp
+
+               let lastSale = "{{$lastSale}}";
+
+                console.log(lastSale);
+                // console.log(transactionCount % 6);
+                // console.log(transactionCount % 5);
+
+                if (referralCount != 0 && transactionCount != 0 || ((transactionCount) % 5 == 0)) {
+                    $('#message').show();
+                } else {
+                    $('#message').hide(); // Hide the message if no customer is selected
+                }
+
+                if (referralCount != 0 )  {
+                    transType.value = "FreeReferral";
+                    refCount.value = 0;
+                    transCount = 1;
+                    console.log("FreeReff Test:1")
+                } else if (referralCount == 0 && transactionCount != 0 && ((transactionCount) % 5) == 0 && lastSale == "Paid" ) {
+                    transType.value = "Free";
+                    console.log("Free Test:1")
+                    refCount.value = referralCount;
+                    transCount.value = 0;
+                    console.log(transactionCount);
+                    console.log(freeCount);
+                    console.log(freeReffCount);
+                } else {
+                    transType.value = "Paid";
+                    console.log("Paid Test:2")
+                    console.log(referralCount);
+                    refCount.value = referralCount;
+                    transCount.value = freeSale;
+                }
+
             } else {
-                transType.value = "Paid";
+                $('#message').hide();
             }
 
-            if (transactionCount % 5 == 0 || referralCount == 1) {
-                $('#message').show(); // Display the message
+            if (selectedCustomer && selectedCustomer !== "Search Customer") {
+                var referralCount = parseInt($('#state_list option:selected').data('referral-count'));
+                if (transactionCount != 0 && (transactionCount - freeCount - freeReffCount) % 5 == 0 ||
+                    referralCount != 0) {
+                    $('#message').show();
+                } else {
+                    $('#message').hide();
+                }
             } else {
-                $('#message').hide(); // Hide the message if transaction_count is not 1
+                $('#message').hide();
             }
-        } else {
-            $('#message').hide(); // Hide the message if no customer is selected
-        }
-
-        if (selectedCustomer && selectedCustomer !== "Search Customer") {
-            var referralCount = parseInt($('#state_list option:selected').data('referral-count'));
-            console.log(referralCount);
-
-            if (transactionCount % 5 == 0 || referralCount == 1) {
-                $('#message').show(); // Display the message
-            } else {
-                $('#message').hide(); // Hide the message if transaction_count is not 1
-            }
-        } else {
-            $('#message').hide(); // Hide the message if no customer is selected
-        }
+        });
     });
-});
+
 </script>
 <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
 <script src="../assets/libs/jquery/dist/jquery.min.js"></script>

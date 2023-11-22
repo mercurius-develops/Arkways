@@ -186,7 +186,7 @@
 
             <div class="container-fluid container-sm">
                 <div class="row">
-                    <div class="card shadow-lg  border-tiffany-2">
+                    <div class="card shadow-lg">
                         <h1 class="card-title m-4 mb-2 fw-bolder fs-7">Edit Customer</h1>
                         <div class="card-body">
                             <form class="row g-3" action="{{ route ('customer.update', $DEF->id) }}" method="post"
@@ -235,7 +235,7 @@
 
             <footer>
                 <div class="py-6 px-6 text-center footer">
-                    <p class="mb-0 fs-4">Developed by <a href="https://mercurius-inc.com" target="_blank"
+                    <p class="mb-0 fs-4">Developed by <a href="#" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">Mercurius Inc.</a></p>
                 </div>
             </footer>
