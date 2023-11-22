@@ -27,7 +27,13 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //CUSTOMER
+Route::get('customer/customer_detail',
+[customer_controller::class, 'show_customer_detail'])->name('customer.show_detail');
 Route::get('customer/show_customer', [customer_controller::class, 'readcustomerdata'])->name('customer.show');
+//route for customer transaction
+Route::get('customer/customer_detail/addTrans/{id}', [customer_controller::class, 'addTrans'])->name('customer.addTrans');
+Route::post('customer/customerTrans', [customer_controller::class, 'updateTrans'])->name('customer.updateTrans');
+
 //route for update operation
 Route::get('customer/show_customer/edit/{id}', [customer_controller::class, 'edit'])->name('customer.edit');
 Route::post('customer/edit_customer/{id}', [customer_controller::class, 'update'])->name('customer.update');
@@ -60,5 +66,4 @@ Route::get('transaction/show_transaction/delete/{id}', [transaction_controller::
 //REF PROGRAM
 Route::get('customer/{id}', 
 [customer_controller::class, 'show'])->name('customer.showdetail');
-Route::get('customer/customer_detail',
-[customer_controller::class, 'show_customer_detail'])->name('customer.show_detail');
+

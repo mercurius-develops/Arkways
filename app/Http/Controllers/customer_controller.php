@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\customer;
 use App\Models\referal_customer;
+use App\Models\transaction;
 
 class customer_controller extends Controller
 {
@@ -55,13 +56,28 @@ class customer_controller extends Controller
 
     public function readcustomerdata(){
         $customer = customer::all();
-        return view('customer/show_customer')->with(['customers'=>$customer]);
+        $transaction = transaction::all(); 
+        return view('customer/show_customer')->with(['customers'=>$customer])->with(['transactions'=> $transaction]);;
         }
+    //function for adding specific customer trans
+    public function addTrans($id) {  
+        $customer = customer::all();
+        $transaction = transaction::find($id); 
+        return view('customer/customerTrans')->with(['DEF' => $transaction])->with(['customers'=>$customer]);
+    }
+    public function updateTrans(Request $request) {
+        $transaction = new transaction; 
+        $transaction->customer_id = $request->get('customer');
+        $transaction->ref_no = $request->get('ref_no');
+        $transaction->trans_type = $request->get('trans_type');
+        $transaction->save(); 
+        return redirect('/home')->with('status', 'transaction updated Successfully!');
+    }
 
     //function for editing
         public function edit($id) {
            
-            $customer = customer::find($id); // Load payments using the model 'Student'
+            $customer = customer::find($id); 
             return view('customer/edit_customer')->with(['DEF' => $customer]);
         }
     //function for updating info
@@ -89,13 +105,18 @@ class customer_controller extends Controller
 
         public function show($id)
         {
-            $customer = customer::with('transactions', 'customers')->findOrFail($id);
-            return view('customer/customer_detail', compact('customer'));
+              
+            $customer = Customer::with('transactions')->findOrFail($id);
+
+            $transaction = $customer->transactions->first();
+
+            return view('customer/customer_detail', compact('customer', 'transaction'));
         }
 
         public function show_customer_detail()
         {
-            return view('customer.show_detail');
+            $transaction = transaction::all();
+            return view('customer/customer_detail')->with(['transactions'=> $transaction]);
         }
 
         public function downloadDocument($customerId)

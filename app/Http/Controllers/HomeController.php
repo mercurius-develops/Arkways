@@ -51,6 +51,7 @@ class HomeController extends Controller
         foreach ($dateRange as $date) {
             $sales[$date] = $transactionData->has($date) ? $transactionData[$date] : 0;
         }
+
         $referral = customer::all()->where('referred_id', '==', '' );
 
 

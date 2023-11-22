@@ -7784,8 +7784,6 @@ fieldset:disabled .btn {
     outline: 0
 }
 
-
-
 .modal-dialog {
     position: relative;
     width: auto;
@@ -12167,12 +12165,9 @@ fieldset:disabled .btn {
 }
 
 
+
 .border-tiffany{
     border: 1px solid #77cbb9;
-}
-
-.border-tiffany-2 {
-    border:1.5px solid #4d9e8c;
 }
 
 .border-2-tiffany{

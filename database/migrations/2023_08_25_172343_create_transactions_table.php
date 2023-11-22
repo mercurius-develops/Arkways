@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedbiginteger('customer_id');
             $table->string('ref_no')->nullable();
+            $table->string('trans_type')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')

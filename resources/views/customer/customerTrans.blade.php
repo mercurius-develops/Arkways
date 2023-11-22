@@ -26,15 +26,14 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <link rel="shortcut icon" type="image/png" href="./assets/images/logos/favicon.png" />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="shortcut icon" type="image/png" href="/assets/images/logos/favicon.png" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
 
-
+  
 </head>
 
 <body>
-
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
         <!-- Sidebar Start -->
         <aside class="left-sidebar">
@@ -186,130 +185,53 @@
 
             <div class="container-fluid container-sm">
                 <div class="row">
-                    <div class="card shadow-lg">
-                        <h1 class="card-title m-4 mb-2 fw-bolder fs-7">Recent Transactions</h1>
-                        <div class="card-body">
-                            <input type="search" id="search" class="live-search-box form-control mb-4"
-                                placeholder="Search Customer">
-                            <div class="d-flex align-items-end">
-                                <div class="align-self-center">
-                                    <button class="btn btn-primary bg-tiffany border-0" id="filterBtn">
-                                        <i class="ti ti-menu-2"></i>
-                                        Filter
-                                    </button>
+                    <div class="card shadow-lg d-flex flex-column align-items-center">
+                        <h1 class="card-title m-4 mb-2 fw-bolder fs-7 align-self-baseline">Add New Transaction</h1>
+                        <div class="card-body w-85">
+                            <form action="{{ route ('customer.updateTrans', $DEF->id) }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Select Customer &nbsp; <span
+                                            class="text-tiffany fw-normal">(Required)</span> </label>
+                                    <div class="d-flex justify-content-between">
+                                        <select class="selectpicker form-control w-85" name="customer"
+                                            data-size="7" data-live-search="true" id="state_list"
+                                            data-width="100%">
+                                 
+                                           @foreach($customers as $customer)
+                                              <option value="{{$customer->id}}" {{$DEF->customer_id == $customer->id ? 'selected' : ''}}>
+                                                  {{$customer->name}}
+                                              </option>
+                                          @endforeach
+                                        </select>
+                                        <div class="w-15 d-flex justify-content-end">
+                                            <a href="{{ route('customer.signup') }}" class="btn btn-primary bg-tiffany border-0">
+                                                <i class="ti ti-plus"></i>
+                                                &nbsp;
+                                                Add New
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="align-items-end gap-4 justify-content-end w-85 display-none" id="filter">
-                                    <div class="w-33">
-                                        <label for="startDate">Start Date:</label>
-                                        <input type="date" class="form-control" id="startDate">
-                                    </div>
-                                    <div class="w-33">
 
-                                        <label for="endDate">End Date:</label>
-                                        <input type="date" id="endDate" class="form-control">
-                                    </div>
-                                    <div class="w-15">
-                                        <button class="btn btn-primary bg-tiffany border-0 w-100 p-2"
-                                            onclick="searchTransactions()">
-                                            Search</button>
-                                    </div>
+                                <div class="w-100">
+                                    <label for="ref_no" class="form-label">Transaction ID &nbsp; <span
+                                            class="text-tiffany fw-normal" aria-required="true"> (Required)</span>
+                                    </label>
+                                    <input type="text" class="form-control" id="ref_no" name="ref_no" required value = "">
                                 </div>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table class="table text-nowrap mb-0 align-middle">
-                                    <thead class="text-dark fs-4">
-                                        <tr>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Serial No</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Name</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Transaction ID </h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Transaction Type</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">Date/Time</h6>
-                                            </th>
-                                            <th class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0"></h6>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="live-search-list">
-
-                                        @php
-                                        $serialNumber = 1;
-                                        @endphp
-                                        @foreach ($transactions as $transaction)
-                                        <tr>
-
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-0">{{$serialNumber}}</h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1 fs-4 text-tiffany">
-                                                    {{$transaction->customer->name}}</h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1 fs-4 text-tiffany">
-                                                    @if ($transaction->ref_no)
-                                                    {{$transaction->ref_no}}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <h6 class="fw-semibold mb-1 fs-4 text-tiffany">
-                                                    @if ($transaction->trans_type)
-                                                    {{$transaction->trans_type}}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                </h6>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <p class="mb-0 fw-normal">{{$transaction->created_at}}</p>
-                                            </td>
-                                            <td class="border-bottom-0">
-                                                <a href="{{ route('transaction.edit', ['id' => $transaction->id]) }}"><button
-                                                        class="btn btn-primary bg-tiffany border-0">
-                                                        <i class="ti ti-pencil"></i>
-                                                    </button></a>
-                                                <a href="{{URL::to('customer', $transaction->customer->id)}}"><button
-                                                        class="btn btn-primary bg-tiffany border-0">
-                                                        <i class="ti ti-user-search"></i>
-                                                    </button></a>
-                                                <a href="{{URL::to('transaction/show_transaction/delete', $transaction->id)}}"
-                                                    onclick="return confirm ('Are you sure to delete this transaction by {{$transaction->customer->name}}?')"><button
-                                                        class="btn btn-primary bg-danger border-0">
-                                                        <i class="ti ti-trash"></i>
-                                                    </button></a>
-                                            </td>
-                                        </tr>
-                                        @php
-                                        $serialNumber++;
-                                        @endphp
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                                <h1 id="noResult"
-                                    class="display-none mb-4 fs-5 text-tiffany fw-bold bg-tiffany-2 rounded p-2 text-center">
-                                    No Search Result Found</h1>
-                            </div>
+                                <div class="w-100 my-4">
+                                    <button type="submit"
+                                        class="btn btn-primary bg-tiffany border-0 p-2 fs-4 mt-2 w-100">Submit</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
 
             <footer>
-                <div class="py-6 px-6 text-center footer">
+                <div class="py-6 px-6 text-center">
                     <p class="mb-0 fs-4">Developed by <a href="#" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">Mercurius Inc.</a></p>
                 </div>
@@ -321,52 +243,9 @@
 
 
 </body>
-<script src="../assets/libs/simplebar/dist/simplebar.js"></script>
-<script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="assets/libs/jquery/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="../assets/js/app.min.js"></script>
-<script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/search3.js"></script>
-<script>
-const search = document.getElementById("search");
-
-
-function searchTransactions() {
-    // Get the selected start and end dates
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    let noResult = document.getElementById("noResult");
-
-    // Loop through the table rows and hide/show based on date range
-    const tableRows = document.querySelectorAll(".live-search-list tr");
-    for (const row of tableRows) {
-        const dateCell = row.querySelector("td:nth-child(5) p");
-        const transactionDate = dateCell.textContent;
-        if (isDateInRange(transactionDate, startDate, endDate)) {
-            row.style.display = "table-row";
-            noResult.classList.add("display-none");
-
-        } else {
-            row.style.display = "none";
-            noResult.classList.remove("display-none");
-
-        }
-    }
-}
-
-function isDateInRange(transactionDate, startDate, endDate) {
-    const transDate = new Date(transactionDate);
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    return transDate >= start && transDate <= end || transDate.toDateString() === start.toDateString() || transDate
-        .toDateString() === end.toDateString();
-}
-
-let filterBtn = document.querySelector("#filterBtn");
-let filter = document.querySelector("#filter");
-filterBtn.addEventListener('click', function() {
-    filter.classList.toggle('d-flex');
-})
-</script>
+<script src="assets/js/app.min.js"></script>
 
 </html>

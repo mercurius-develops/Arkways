@@ -186,7 +186,7 @@
 
             <div class="container-sm">
                 <div class="row">
-                    <div class="card shadow-lg  border-tiffany-2 rounded-3">
+                    <div class="card shadow-lg rounded-3">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
                                 <h1 class="fw-bolder text-uppercase text-tiffany fs-12 m-7 ms-0">{{ $customer->name }}
@@ -317,11 +317,12 @@
                                     </div>
                                     <div class="col-span-2"></div>
                                     <div class="col-span-5">
-                                    @if ($customer->transactions->where('trans_type' , '==', 'Paid')->count()%6 == 5) 
-                                    <a href="{{ route ('transaction.signup') }}" method="get"><button
-                                            class="btn btn-primary bg-tiffany border-0 px-3  gap-2 d-flex align-items-center justify-content-between">
-                                            Avail Free Sale</button></a>
-                                    @endif
+                                    <a href="{{ route('customer.addTrans', ['id' => $transaction->id]) }}" method="get">
+                                        <button class="btn btn-primary bg-tiffany border-0 px-3 gap-2 d-flex align-items-center justify-content-between">
+                                            Add Transaction
+                                        </button>
+                                        </a>
+                              
                                     </div>
                                 </div>
                             </div>
@@ -376,7 +377,7 @@
 
             <footer>
                 <div class="py-6 px-6 text-center footer">
-                    <p class="mb-0 fs-4">Developed by <a href="https://mercurius-inc.com" target="_blank"
+                    <p class="mb-0 fs-4">Developed by <a href="#" target="_blank"
                             class="pe-1 text-primary text-decoration-underline">Mercurius Inc.</a></p>
                 </div>
             </footer>
