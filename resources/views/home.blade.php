@@ -222,7 +222,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-5  d-flex align-items-stretch">
-                        <div class="card shadow w-100  border-tiffany-2">
+                        <div class="card shadow w-100  border-tiffany-2 ">
                             <div class="card-body p-4">
                                 <div class="mb-4 d-flex justify-content-start align-items-center">
                                     <h5 class="card-title ms-2 fw-semibold col-9">Recent Transactions</h5>
